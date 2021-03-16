@@ -37,6 +37,26 @@ public class TestLibretto {
 		System.out.println(chimica + " conflitto con "+chimica_conflitto+"? -> "+libretto.esisteConflitto(chimica_doppio));
 		System.out.println(chimica + " doppione di "+chimica_conflitto+"? -> "+libretto.esisteDuplicato(chimica_conflitto));
 		System.out.println(chimica + " conflitto con "+chimica_conflitto+"? -> "+libretto.esisteConflitto(chimica_conflitto));
+
+		libretto.add(chimica_doppio);
+		libretto.add(chimica_conflitto);
+		System.out.println("\n\n Stampa libretto dopo aggiunta voto doppio e in conflitto\n"+libretto);
 		
+		Libretto librettoMigliorato=new Libretto();
+		librettoMigliorato.addMigliorato(voto1);
+		librettoMigliorato.addMigliorato(new Voto("Fisica 1", 28, LocalDate.of(2019,  7, 15)));
+		librettoMigliorato.addMigliorato(new Voto("Informatica", 24, LocalDate.of(2019,  9,  15)));
+		librettoMigliorato.addMigliorato(new Voto("Chimica", 25, LocalDate.of(2019,  7,  18)));
+
+		
+		System.out.println("\n\n***Libretto***\n"+libretto);
+		System.out.println("\n***Libretto Migliorato\n"+librettoMigliorato);
+		
+		System.out.println("\n***Libretto Ordine Alfabetico***\n"+libretto.toStringAlfabetico());
+		System.out.println("\n***Libretto Ordine Voti Decrescenti***\n"+libretto.toStringVoto());
+		
+		libretto.cancellaEsami(26);
+		System.out.println("\n\n***Libretto (cancellati voti minori di 26***\n"+libretto);
+
 	}
 }

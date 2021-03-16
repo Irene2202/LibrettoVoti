@@ -1,6 +1,7 @@
 package it.polito.tdp.librettovoti.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,28 @@ public class Libretto {
 	}
 	
 	public void add(Voto v) {
-		this.voti.add(v);
-		this.votiMap.put(v.getNome(), v);
+		if((this.esisteConflitto(v) || this.esisteDuplicato(v))==false){
+			this.voti.add(v);
+			this.votiMap.put(v.getNome(), v);
+		}
+	}
+	
+	public void addMigliorato(Voto v) {
+		if((this.esisteConflitto(v) || this.esisteDuplicato(v))==false){
+			if(v.getVoto()>=18 && v.getVoto()<24) {
+				v.setVoto(v.getVoto()+1);
+			}
+			else if(v.getVoto()>=24 && v.getVoto()<29) {
+				v.setVoto(v.getVoto()+2);
+			}
+			else {
+				v.setVoto(30);
+			}
+			
+			this.voti.add(v);
+			this.votiMap.put(v.getNome(), v);
+		}
+		
 	}
 	
 	/* blah
@@ -71,6 +92,20 @@ public class Libretto {
 	}
 	
 	/**
+	 * cancella tutti i voti dal libretto con valutazione inferiore 
+	 * a quella passata come parametro
+	 * @param punteggio
+	 */
+	public void cancellaEsami(int punteggio) {
+		for(Voto v:this.voti) {
+			if(v.getVoto()<punteggio) {
+				voti.remove(v);
+				votiMap.remove(v.getNome());
+			}
+		}
+	}
+	
+	/**
 	 * Verifica se nel libretto c'è già un voto con stesso esame e
 	 * stessa valutazione
 	 * @param v
@@ -122,6 +157,30 @@ public class Libretto {
 	public String toString() {
 		String s="";
 		for(Voto v:this.voti) {
+			s=s+v.toString()+"\n";
+		}
+		return s;
+	}
+	
+	public String toStringAlfabetico() {
+		List<Voto> votiAlf=new ArrayList<>();
+		votiAlf.addAll(voti);
+		Collections.sort(votiAlf, new OrdinaAlfabeticamente());
+		
+		String s="";
+		for(Voto v:votiAlf) {
+			s=s+v.toString()+"\n";
+		}
+		return s;
+	}
+	
+	public String toStringVoto() {
+		List<Voto> votiDec=new ArrayList<>();
+		votiDec.addAll(voti);
+		Collections.sort(votiDec, new OrdinaVotiDecrescenti());
+		
+		String s="";
+		for(Voto v:votiDec) {
 			s=s+v.toString()+"\n";
 		}
 		return s;

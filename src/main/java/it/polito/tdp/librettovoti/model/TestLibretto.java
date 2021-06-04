@@ -56,7 +56,7 @@ public class TestLibretto {
 		System.out.println("\n***Libretto Ordine Voti Decrescenti***\n"+libretto.toStringVoto());
 		
 		libretto.cancellaEsami(26);
-		System.out.println("\n\n***Libretto (cancellati voti minori di 26***\n"+libretto);
+		System.out.println("\n\n***Libretto (cancellati voti minori di 26)***\n"+libretto);
 
 	}
 }
